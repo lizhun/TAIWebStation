@@ -16,6 +16,7 @@ namespace TAIWebStation
             context.Response.ContentType = "text/plain";
             context.Response.Write("Hello World");
             context.Response.Write("Hello World");
+            context.Response.Write("Hello World");
         }
 
         public bool IsReusable
