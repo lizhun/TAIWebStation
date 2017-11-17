@@ -19,7 +19,7 @@ namespace TencentAImis
             public static readonly string OTHER = "3";
         }
 
-        /**
+        /*******
          * 眼底必须上传，描述图像对应的部位，眼底需要传
            未知：0，左眼：1， 右眼：2。其他待定
          */
