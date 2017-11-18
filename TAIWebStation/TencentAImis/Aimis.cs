@@ -13,10 +13,17 @@ namespace TencentAImis
 	     * @param baseUrl 腾讯服务器url地址
 	     * @param debug debug模式为调试模式,输出打印日志
 	     */
-        public Aimis(string partnerId, string token, string url, bool isDebug=false)
+        public Aimis(string partnerId, string token, string url, bool isDebug = false)
         {
             HttpHelper = new HttpHelper(partnerId, token, url, isDebug);
             tool = new Tools(isDebug);
+        }
+
+        public Aimis(bool isDebug = false)
+        {
+            HttpHelper = new HttpHelper(isDebug);
+            tool = new Tools(isDebug);
+            this.tool = new Tools(isDebug);
         }
 
         /**
@@ -54,7 +61,7 @@ namespace TencentAImis
 	     * @param param 请求参数
 	     * @return 
 	     * @throws Exception
-	     */ 
+	     */
         public DicomResultResponse GetDicomAIResult(DicomResultRequest param)
         {
             string action = "dicomresult";

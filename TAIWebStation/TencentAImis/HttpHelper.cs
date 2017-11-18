@@ -4,6 +4,7 @@ using System.Net;
 using System.IO;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
+using System.Configuration;
 
 namespace TencentAImis
 {
@@ -20,7 +21,14 @@ namespace TencentAImis
             this.partnerId = partnerId;
             this.token = token;
             this.baseUrl = baseUrl;
-            this.tool = new Tools(debug); 
+            this.tool = new Tools(debug);
+        }
+        public HttpHelper( bool debug)
+        {
+            this.partnerId = ConfigurationManager.AppSettings["PartnerId"];
+            this.token = ConfigurationManager.AppSettings["Token"]; ;
+            this.baseUrl = ConfigurationManager.AppSettings["BaseUrl"]; ;
+            this.tool = new Tools(debug);
         }
 
         private bool CheckValidationResult(object sender,
@@ -29,7 +37,7 @@ namespace TencentAImis
             return true;// Always accept
         }
 
-        public Tuple<string,string> DoRequest(string action, string content)
+        public Tuple<string, string> DoRequest(string action, string content)
         {
             try
             {
@@ -54,7 +62,7 @@ namespace TencentAImis
                     webRequest.Headers
                         .Add("aimis-sdk-version", AImisEnum.SDK_VERSION);
 
-                    tool.Logger("构造头部信息成功！头部信息：",webRequest.Headers.ToString());
+                    tool.Logger("构造头部信息成功！头部信息：", webRequest.Headers.ToString());
 
                     using (var streamWriter = new StreamWriter(webRequest.GetRequestStream()))
                     {
