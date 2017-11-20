@@ -5,7 +5,7 @@ using System.Data.SqlClient;
 using System.Collections;
 using System.Configuration;
 
-namespace TAIWebStation
+namespace BLL
 {
     /// <summary> 
     /// SqlServer数据访问帮助类 
