@@ -19,7 +19,7 @@ namespace TAIWebStation
             context.Response.ContentType = "text/plain";
             if (context.Request.HttpMethod == "POST")
             {
-                Aimis manager = new Aimis(false);
+                Aimis manager = new Aimis(false);//1111
                 StudyUploadRequest data = new StudyUploadRequest();
                 var result = manager.StudyUpload(data);
                 
