@@ -16,48 +16,22 @@ namespace TAIWebStation
         public void ProcessRequest(HttpContext context)
         {
             context.Response.ContentType = "text/plain";
+            string resultStr = "";
             var form = context.Request.Form;
             var studyId = form.AllKeys.Contains("StudyId") ? form["StudyId"] : "";
-            var dbType = form["dbType"];
-            var patId = form["patId"];
+            var dbType = form["dbType"].Trim();
+            var patId = form["patId"].Trim();
             Aimis manager = new Aimis(false);//1111
             TAIDbManager dbmanager = new TAIDbManager();
-            var paras = new AIResultRequest();
+            var paras = new AIResultRequest();           
             paras.StudyId = dbmanager.GetStudyIdByPatId(dbType, patId);
             var result = manager.GetAIResult(paras);
-            dbmanager.SaveAIResult(dbType, paras.StudyId, result.Data.Result);
-            switch (result.Data.Result)
+            if (result.Code == 0)
             {
-                case 0: {
-                        break;
-                    }
-                case 1:
-                    {
-                        break;
-                    }
-                case 2:
-                    {
-                        break;
-                    }
-                case 3:
-                    {
-                        break;
-                    }
-                case 4:
-                    {
-                        break;
-                    }
-                case 5:
-                    {
-                        break;
-                    }
-                default:
-                    {
-                        break;
-                    }
-                 
+                dbmanager.SaveAIResult(dbType, paras.StudyId, result.Data.Result);
+                resultStr = result.Data.Result.ToString();                 
             }
-            context.Response.Write(result.Data.Result);
+            context.Response.Write(result);
         }
 
         public bool IsReusable
