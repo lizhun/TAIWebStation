@@ -46,12 +46,12 @@ namespace TAIWebStation
             List<ImageParams> imglist = new List<ImageParams>();
             data.Images = imglist;
             data.StudyId = Guid.NewGuid().ToString();
-            data.StudyType = formdata["StudyType"].Trim();
-            data.StudyName = formdata["StudyName"].Trim();
-            data.PatientId = formdata["PatientId"].Trim();
-            data.PatientName = formdata["PatientName"].Trim();
-            data.PatientGender = formdata["PatientGender"].Trim();
-            data.PatientBirthday = formdata["PatientBirthday"].Trim();
+            data.StudyType = formdata["StudyType"]?.Trim();
+            data.StudyName = formdata["StudyName"]?.Trim();
+            data.PatientId = formdata["PatientId"]?.Trim();
+            data.PatientName = formdata["PatientName"]?.Trim();
+            data.PatientGender = formdata["PatientGender"]?.Trim();
+            data.PatientBirthday = formdata["PatientBirthday"]?.Trim();
             var sdata = formdata["StudyDate"].Trim();
             data.StudyDate = (int)(DateTime.Parse(sdata).Ticks - DateTime.Parse("1970-1-1").Ticks);
             var imgdatalist = formdata.AllKeys.Where(x => x.Contains("img_"));
@@ -60,8 +60,8 @@ namespace TAIWebStation
             foreach (var imgdata in imgids)
             {
                 var imgitem = new ImageParams();
-                imgitem.Content = formdata["img_" + imgdata + "_content"].Trim();
-                imgitem.Url = formdata["img_" + imgdata + "url"].Trim();
+                imgitem.Content = formdata["img_" + imgdata + "_content"]?.Trim();
+                imgitem.Url = formdata["img_" + imgdata + "url"]?.Trim();
                 imgitem.ImageId = imgdata;
                 imglist.Add(imgitem);
 

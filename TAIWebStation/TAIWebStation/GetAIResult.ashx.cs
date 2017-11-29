@@ -21,21 +21,25 @@ namespace TAIWebStation
             string resultStr = "";// "1$中就事论事$http://www.baidu.com";
             string code = "", codename = "处理失败";
             var form = context.Request.Form;
-            var studyId = form.AllKeys.Contains("StudyId") ? form["StudyId"] : "";
-            string url = string.Format("{0}/studydetail?partnerId={1}&studyId={2}",
-                tencentUrl, parentId, studyId);
             var dbType = form["dbType"].Trim();
             var patId = form["patId"].Trim();
             Aimis manager = new Aimis(false);//1111
             TAIDbManager dbmanager = new TAIDbManager();
             var paras = new AIResultRequest();
             paras.StudyId = dbmanager.GetStudyIdByPatId(dbType, patId);
+            string url = string.Format("{0}/studydetail?partnerId={1}&studyId={2}",
+               tencentUrl, parentId, paras.StudyId);
             var result = manager.GetAIResult(paras);
             if (result.Code == 0)
             {
                 dbmanager.SaveAIResult(dbType, paras.StudyId, result.Data.Result);
                 code = result.Data.Result.ToString();
                 codename = getCodeName(code);
+            }
+            else
+            {
+                code = result.Code.ToString();
+                codename = result.Message;
             }
             resultStr = string.Format("{0}${1}${2}", code, codename, url);
             context.Response.Write(resultStr);
