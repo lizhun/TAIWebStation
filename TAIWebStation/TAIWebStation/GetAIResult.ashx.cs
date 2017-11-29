@@ -21,8 +21,8 @@ namespace TAIWebStation
             string resultStr = "";// "1$中就事论事$http://www.baidu.com";
             string code = "", codename = "处理失败";
             var form = context.Request.Form;
-            var dbType = form["dbType"].Trim();
-            var patId = form["patId"].Trim();
+            var dbType = form["dbType"]?.Trim();
+            var patId = form["patId"]?.Trim();
             Aimis manager = new Aimis(false);//1111
             TAIDbManager dbmanager = new TAIDbManager();
             var paras = new AIResultRequest();
