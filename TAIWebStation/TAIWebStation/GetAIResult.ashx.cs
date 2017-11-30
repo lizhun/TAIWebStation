@@ -15,24 +15,22 @@ namespace TAIWebStation
 
         public void ProcessRequest(HttpContext context)
         {
-            string tencentUrl = System.Configuration.ConfigurationManager.AppSettings["BaseUrl"];
-            string parentId = System.Configuration.ConfigurationManager.AppSettings["PartnerId"];
+            string tencentUrl = AppSettings.TAIBaseUrl;
+            string parentId = AppSettings.PartnerId;
             context.Response.ContentType = "text/plain";
             string resultStr = "";// "1$中就事论事$http://www.baidu.com";
             string code = "", codename = "处理失败";
             var form = context.Request.Form;
-            var dbType = form["dbType"]?.Trim();
-            var patId = form["patId"]?.Trim();
+            var StudyId = form["StudyId"]?.Trim();
+             
             Aimis manager = new Aimis(false);//1111
-            TAIDbManager dbmanager = new TAIDbManager();
             var paras = new AIResultRequest();
-            paras.StudyId = dbmanager.GetStudyIdByPatId(dbType, patId);
+            paras.StudyId = StudyId;
             string url = string.Format("{0}/studydetail?partnerId={1}&studyId={2}",
                tencentUrl, parentId, paras.StudyId);
             var result = manager.GetAIResult(paras);
-            if (result.Code == 0)
-            {
-                dbmanager.SaveAIResult(dbType, paras.StudyId, result.Data.Result);
+            if (result.Code == 0)            {
+                
                 code = result.Data.Result.ToString();
                 codename = getCodeName(code);
             }

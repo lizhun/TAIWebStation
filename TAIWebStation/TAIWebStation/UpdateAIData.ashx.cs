@@ -21,16 +21,11 @@ namespace TAIWebStation
             if (context.Request.HttpMethod == "POST")
             {
                 var formdata = context.Request.Form;
-                var dbType = formdata["DbType"].Trim();
-                var patId = formdata["PatId"].Trim();
+            
                 Aimis manager = new Aimis(false);//1111
-                TAIDbManager dbmanager = new TAIDbManager();
                 var data = ContextToAIRequst(context);
                 var result = manager.StudyUpload(data);
-                var imgdatalist = formdata.AllKeys.Where(x => x.Contains("img_"));
-                var imgids = imgdatalist.Select(x => x.Replace("img_", "")
-           .Replace("_content", "").Replace("_url", "")).Distinct().ToList();
-                dbmanager.SaveStudyUpload(dbType, data.StudyId, patId, imgids);
+                context.Response.Write(result.ToString());         
             }
             else
             {

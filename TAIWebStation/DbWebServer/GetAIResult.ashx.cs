@@ -26,7 +26,7 @@ namespace DbWebServer
             WebClient cc = new WebClient();
             var paras = new NameValueCollection();
             paras.Add("StudyId", "StudyId");
-            byte[] responseData = cc.UploadValues("StudyId", paras);
+            byte[] responseData = cc.UploadValues(AppSettings.FrontServerBaseUrl + "/GetAIResult.ashx", paras);
             var strdata = Encoding.UTF8.GetString(responseData);
             context.Response.Write(strdata);
         }
