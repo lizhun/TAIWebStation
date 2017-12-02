@@ -12,8 +12,8 @@ namespace BLL
          ConfigurationManager.AppSettings[nameof(PartnerId)];
         public static string Token =>
     ConfigurationManager.AppSettings[nameof(Token)];
-        public static string TAIBaseUrl =>
-    ConfigurationManager.AppSettings[nameof(TAIBaseUrl)];
+        public static string BaseUrl =>
+    ConfigurationManager.AppSettings[nameof(BaseUrl)];
         public static string DBBaseUrl =>
 ConfigurationManager.AppSettings[nameof(DBBaseUrl)];
         public static string FrontServerBaseUrl =>

@@ -15,7 +15,7 @@ namespace TAIWebStation
 
         public void ProcessRequest(HttpContext context)
         {
-            string tencentUrl = AppSettings.TAIBaseUrl;
+            string tencentUrl = AppSettings.BaseUrl;
             string parentId = AppSettings.PartnerId;
             context.Response.ContentType = "text/plain";
             string resultStr = "";// "1$中就事论事$http://www.baidu.com";
