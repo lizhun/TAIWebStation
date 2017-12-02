@@ -21,13 +21,13 @@ namespace TencentAImis
             this.partnerId = partnerId;
             this.token = token;
             this.baseUrl = baseUrl;
-            this.tool = new Tools(debug);
+            this.tool = new Tools(debug); 
         }
         public HttpHelper( bool debug)
         {
-            this.partnerId = ConfigurationManager.AppSettings["PartnerId"];
-            this.token = ConfigurationManager.AppSettings["Token"]; ;
-            this.baseUrl = ConfigurationManager.AppSettings["BaseUrl"]; ;
+            this.partnerId =ConfigurationManager.AppSettings["PartnerId"];
+            this.token = ConfigurationManager.AppSettings["Token"];
+            this.baseUrl = ConfigurationManager.AppSettings["BaseUrl"];
             this.tool = new Tools(debug);
         }
 
@@ -37,13 +37,12 @@ namespace TencentAImis
             return true;// Always accept
         }
 
-        public Tuple<string, string> DoRequest(string action, string content)
+        public Tuple<string,string> DoRequest(string action, string content)
         {
             try
             {
                 string url = baseUrl + "/" + action + "/" + partnerId;
-                string uuid = Guid.NewGuid().ToString();
-                tool.Logger("请求正在执行, url:", url, "request id:", uuid);
+                tool.Logger("构造请求地址成功！请求地址：", url);
                 var webRequest = System.Net.WebRequest.Create(url);
                 if (webRequest != null)
                 {
@@ -58,11 +57,9 @@ namespace TencentAImis
                     webRequest.Headers
                         .Add("god-portal-timestamp", vtime);
                     webRequest.Headers
-                        .Add("god-portal-request-id", uuid);
-                    webRequest.Headers
                         .Add("aimis-sdk-version", AImisEnum.SDK_VERSION);
 
-                    tool.Logger("构造头部信息成功！头部信息：", webRequest.Headers.ToString());
+                    tool.Logger("构造头部信息成功！头部信息：",webRequest.Headers.ToString());
 
                     using (var streamWriter = new StreamWriter(webRequest.GetRequestStream()))
                     {
@@ -77,12 +74,22 @@ namespace TencentAImis
                                 new RemoteCertificateValidationCallback(CheckValidationResult);
                     }
 
-                    using (System.IO.Stream s = webRequest.GetResponse().GetResponseStream())
+                    using (WebResponse res = webRequest.GetResponse())
+                    using (System.IO.Stream s = res.GetResponseStream())
                     {
                         using (System.IO.StreamReader sr = new System.IO.StreamReader(s))
                         {
                             string jsonResponse = sr.ReadToEnd();
                             tool.Logger("请求发送成功！返回内容：", jsonResponse);
+                            string uuid = "";
+                            for (int i = 0; i < res.Headers.Count; ++i) 
+                            { 
+                                if (res.Headers.Keys[i] == "god-portal-request-id") 
+                                {
+                                    uuid = res.Headers[i];
+                                    break;
+                                }
+                            }
                             return Tuple.Create(uuid, jsonResponse);
                         }
                     }

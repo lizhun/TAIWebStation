@@ -15,6 +15,12 @@ namespace TencentAImis
 	     */
         public Aimis(string partnerId, string token, string url, bool isDebug = false)
         {
+            char last = url[url.Length - 1];
+            if (last == '/')
+            {
+                url = url.Substring(0, url.Length - 1);
+            }
+
             HttpHelper = new HttpHelper(partnerId, token, url, isDebug);
             tool = new Tools(isDebug);
         }
@@ -23,7 +29,6 @@ namespace TencentAImis
         {
             HttpHelper = new HttpHelper(isDebug);
             tool = new Tools(isDebug);
-            this.tool = new Tools(isDebug);
         }
 
         /**

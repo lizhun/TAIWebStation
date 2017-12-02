@@ -13,9 +13,11 @@ namespace TencentAImis
     /**
 	 * 非CT类检查信息上传接口参数类
 	 * @param StudyId 本次检查在医院侧的序列号
-	 * @param StudyType 检查类型
-	 * @param StudyDate 检查日期，返回1970年1月1日至今的时间戳，单位秒
 	 * @param StudyName 检查名称
+	 * @param StudyDate 检查日期，返回1970年1月1日至今的时间戳，单位秒
+	 * @param StudyType 检查类型
+     * @param PatientName 患者姓名
+     * @param PatientId 患者id
      * @param PatientGender 患者性别
      * @param PatientBirthday 患者生日，格式2017-08-22
      * @param Images 图片对象列表
@@ -25,20 +27,20 @@ namespace TencentAImis
         [JsonProperty("studyId")]
         public string StudyId { get; set; }
 
-        [JsonProperty("studyType")]
-        public string StudyType { get; set; }
-
-        [JsonProperty("studyDate")]
-        public int StudyDate { get; set; }
-
         [JsonProperty("studyName")]
         public string StudyName { get; set; }
 
-        [JsonProperty("patientId")]
-        public string PatientId { get; set; }
+        [JsonProperty("studyDate")]
+        public long StudyDate { get; set; }
+
+        [JsonProperty("studyType")]
+        public string StudyType { get; set; }
 
         [JsonProperty("patientName")]
         public string PatientName { get; set; }
+
+        [JsonProperty("patientId")]
+        public string PatientId { get; set; }
 
         [JsonProperty("patientGender")]
         public string PatientGender { get; set; }
@@ -53,39 +55,47 @@ namespace TencentAImis
     /**
 	 * 非CT类检查信息结果查询接口参数类
 	 * @param StudyId 本次检查在医院侧的序列号
+	 * @param StudyType 检查类型
 	 */
     public class AIResultRequest : BaseRequest
     {
         [JsonProperty("studyId")]
         public string StudyId { get; set; }
+
+        [JsonProperty("studyType")]
+        public string StudyType { get; set; }
     }
 
     /**
      * CT类检查信息结果查询接口参数类
      * @param StudyId 本次检查在医院侧的序列号
+	 * @param StudyType 检查类型
      */
     public class DicomResultRequest : BaseRequest
     {
         [JsonProperty("studyId")]
         public string StudyId { get; set; }
+
+        [JsonProperty("studyType")]
+        public string StudyType { get; set; }
     }
 
     /**
      * 检查报告上传接口参数类
      * @param StudyId 本次检查在医院侧的序列号
-     * @param Conclusion 图像描述的内容
      * @param ImageDescribe 诊断内容
+     * @param Conclusion 图像描述的内容
      */
     public class ReportUploadRequest : BaseRequest
     {
         [JsonProperty("studyId")]
         public string StudyId { get; set; }
 
-        [JsonProperty("conclusion")]
-        public string Conclusion { get; set; }
-
         [JsonProperty("imageDescribe")]
         public string ImageDescribe { get; set; }
+
+        [JsonProperty("conclusion")]
+        public string Conclusion { get; set; }
     }
 
     /**
@@ -93,10 +103,10 @@ namespace TencentAImis
 	 * @param StudyId 本次检查在医院侧的序列号
 	 * @param StudyType 检查类型
 	 * @param StudyName 检查名称
+     * @param Images 图片对象列表
      * @param PatientName 患者姓名
      * @param SeriesNo 医院测序列号
      * @param UploadDone 上传状态
-     * @param Images 图片对象列表
 	 */
     public class UploadDicomRequest : BaseRequest
     {
@@ -109,6 +119,9 @@ namespace TencentAImis
         [JsonProperty("studyName")]
         public string StudyName { get; set; }
 
+        [JsonProperty("images")]
+        public List<ImageParams> Images { get; set; }
+
         [JsonProperty("patientName")]
         public string PatientName { get; set; }
 
@@ -117,9 +130,6 @@ namespace TencentAImis
 
         [JsonProperty("uploadDone")]
         public string UploadDone { get; set; }
-
-        [JsonProperty("images")]
-        public List<ImageParams> Images { get; set; }
     }
 
     /**
@@ -133,14 +143,14 @@ namespace TencentAImis
         [JsonProperty("imageId")]
         public string ImageId { get; set; }
 
+        [JsonProperty("content")]
+        public string Content { get; set; }
+
         [JsonProperty("url")]
         public string Url { get; set; }
 
         [JsonProperty("descPosition")]
         public string DescPosition { get; set; }
-
-        [JsonProperty("content")]
-        public string Content { get; set; }
     }
 
     /**
@@ -171,6 +181,7 @@ namespace TencentAImis
      * 非CT类检查结果查询返回结果对象类
      * @param StudyId 医院侧检查编号
      * @param Result 返回结果，具体参考返回结果码相关文档
+     * @param Desc 返回结果描述
      */
     public class AIResultResData
     {
@@ -179,6 +190,9 @@ namespace TencentAImis
 
         [JsonProperty("result")]
         public int Result { get; set; }
+
+        [JsonProperty("desc")]
+        public string Desc { get; set; }
     }
 
     /**
@@ -200,19 +214,23 @@ namespace TencentAImis
     /**
      * CT类检查结果查询接口返回结果对象类
      * @param StudyId 医院侧检查编号
-     * @param MarkList 标注列表
      * @param Result 返回结果，具体参考返回结果码相关文档
+     * @param Desc 返回结果描述
+     * @param MarkList 标注列表
      */
     public class DicomResultResData
     {
         [JsonProperty("studyId")]
         public string StudyId { get; set; }
 
-        [JsonProperty("markList")]
-        public List<DicomMark> MarkList { get; set; }
-
         [JsonProperty("result")]
         public int Result { get; set; }
+
+        [JsonProperty("desc")]
+        public string Desc { get; set; }
+
+        [JsonProperty("markList")]
+        public List<DicomMark> MarkList { get; set; }
     }
 
     /**

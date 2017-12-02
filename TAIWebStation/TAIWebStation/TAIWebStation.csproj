@@ -104,9 +104,9 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>62220</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:9999</IISUrl>
+          <IISUrl>http://localhost:6666</IISUrl>
           <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
-          <IISAppRootUrl>http://localhost:9999</IISAppRootUrl>
+          <IISAppRootUrl>http://localhost:6666/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

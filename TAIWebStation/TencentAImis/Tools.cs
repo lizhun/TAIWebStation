@@ -59,6 +59,7 @@ namespace TencentAImis
                 throw e;
             }
         }
+
         public T DecodeJson<T>(string jsonString)
         {
             try

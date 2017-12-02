@@ -25,7 +25,7 @@ namespace DbWebServer
             var StudyId = dbmanager.GetStudyIdByPatId(dbType, patId);
             WebClient cc = new WebClient();
             var paras = new NameValueCollection();
-            paras.Add("StudyId", "StudyId");
+            paras.Add("StudyId", StudyId);
             byte[] responseData = cc.UploadValues(AppSettings.FrontServerBaseUrl + "/GetAIResult.ashx", paras);
             var strdata = Encoding.UTF8.GetString(responseData);
             context.Response.Write(strdata);

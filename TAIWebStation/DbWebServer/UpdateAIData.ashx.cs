@@ -35,7 +35,7 @@ namespace DbWebServer
                 var imgdatalist = context.Request.Form.AllKeys.Where(x => x.Contains("img_"));
                 var imgids = imgdatalist.Select(x => x.Replace("img_", "")
            .Replace("_content", "").Replace("_url", "")).Distinct().ToList();
-                TAIDbManager dbmanager = new TAIDbManager();
+                var dbmanager = new TAIDbManager();
                 dbmanager.SaveStudyUpload(dbType, studyId, patId, imgids);
                 context.Response.Write(strdata);
             }
