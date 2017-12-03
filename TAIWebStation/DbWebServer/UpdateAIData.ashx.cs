@@ -28,14 +28,15 @@ namespace DbWebServer
                 {
                     paras.Add(key, context.Request.Form[key]);
                 }
-                string studyId = Guid.NewGuid().ToString();
+                var dbmanager = new TAIDbManager();
+                string studyId = dbmanager.GetStudyIdByPatId(dbType, patId);
                 paras.Add("StudyId", studyId);
                 byte[] responseData = cc.UploadValues(AppSettings.FrontServerBaseUrl + "/UpdateAIData.ashx", paras);
                 var strdata = Encoding.UTF8.GetString(responseData);
                 var imgdatalist = context.Request.Form.AllKeys.Where(x => x.Contains("img_"));
                 var imgids = imgdatalist.Select(x => x.Replace("img_", "")
            .Replace("_content", "").Replace("_url", "")).Distinct().ToList();
-                var dbmanager = new TAIDbManager();
+               
                 dbmanager.SaveStudyUpload(dbType, studyId, patId, imgids);
                 context.Response.Write(strdata);
             }

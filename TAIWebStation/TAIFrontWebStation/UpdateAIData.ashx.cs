@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using TencentAImis;
 
-namespace TAIWebStation
+namespace TAIFrontWebStation
 {
     /// <summary>
     /// UpdateAIData 的摘要说明

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using TencentAImis;
 
-namespace TAIWebStation
+namespace TAIFrontWebStation
 {
     /// <summary>
     /// Handler1 的摘要说明

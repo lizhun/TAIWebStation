@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // 有关程序集的常规信息通过下列特性集
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("TAIWebStation")]
+[assembly: AssemblyTitle("TAIFrontWebStation")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("TAIWebStation")]
+[assembly: AssemblyProduct("TAIFrontWebStation")]
 [assembly: AssemblyCopyright("版权所有(C)  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // 如果此项目向 COM 公开，则下列 GUID 用于类型库的 ID
-[assembly: Guid("310a2da1-460a-4a04-88e0-c10441280cc9")]
+[assembly: Guid("098d4025-ee7b-4cf0-94a6-c8825849d7ca")]
 
 // 程序集的版本信息由下列四个值组成:
 //

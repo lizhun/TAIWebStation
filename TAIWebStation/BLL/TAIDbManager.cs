@@ -62,7 +62,7 @@ namespace BLL
 
         public string GetStudyIdByPatId(string type, string patId)
         {
-            string studyId = "";
+            string studyId = Guid.NewGuid().ToString();
             using (var con = new SqlConnection(this.GetDbCon(type.ToUpper())))
             {
                 var sqlparams = new SqlParameter[] { new SqlParameter("@PatId", patId) };
