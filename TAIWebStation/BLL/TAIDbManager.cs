@@ -27,12 +27,32 @@ namespace BLL
                 {
                     var sqlparams = new SqlParameter[] { new SqlParameter("@StudyId", studyId) ,
                     new SqlParameter("@PatId", patId)};
-                    SqlHelper.ExecuteNonQuery(con, CommandType.Text, @"Insert into TB_TAIUploadHistory (StudyId,PatId,SendStatus)   VALUES (@StudyId,@PatId,1)", sqlparams);
+                    SqlHelper.ExecuteNonQuery(con, CommandType.Text, @"declare  @datacount int;
+set @datacount =(select COUNT(*) from TB_TAIUploadHistory where PatId=@PatId);
+if @datacount >0 
+begin
+ update TB_TAIUploadHistory set UpdateTime=GETDATE() where PatId=@PatId 
+end
+else
+begin
+Insert into TB_TAIUploadHistory 
+(StudyId,PatId,SendStatus,CreateTime,UpdateTime)   VALUES (@StudyId,@PatId,1,GETDATE(),GETDATE())
+end;", sqlparams);
                     foreach (var img in imageids)
                     {
                         var imgparams = new SqlParameter[] { new SqlParameter("@StudyId", studyId) ,
                     new SqlParameter("@ImageId", img)};
-                        SqlHelper.ExecuteNonQuery(con, CommandType.Text, @"Insert into TB_TAIUploadImageHistory (StudyId,ImageId) VALUES (@StudyId,@ImageId)", imgparams);
+                        SqlHelper.ExecuteNonQuery(con, CommandType.Text, @"declare  @datacount int;
+set @datacount =(select COUNT(*) from TB_TAIUploadImageHistory where StudyId=@StudyId and imageid=@ImageId);
+if @datacount >0 
+begin
+ update TB_TAIUploadImageHistory set UpdateTime=GETDATE() where StudyId=@StudyId and imageid=@ImageId
+end
+else
+begin
+Insert into TB_TAIUploadImageHistory 
+(StudyId,ImageId)   VALUES (@StudyId,@ImageId)
+end;", imgparams);
 
                     }
                 }

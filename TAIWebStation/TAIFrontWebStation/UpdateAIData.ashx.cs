@@ -40,7 +40,7 @@ namespace TAIFrontWebStation
             StudyUploadRequest data = new StudyUploadRequest();
             List<ImageParams> imglist = new List<ImageParams>();
             data.Images = imglist;
-            data.StudyId = Guid.NewGuid().ToString();
+            data.StudyId = formdata["StudyId"]?.Trim();
             data.StudyType = formdata["StudyType"]?.Trim();
             data.StudyName = formdata["StudyName"]?.Trim();
             data.PatientId = formdata["PatientId"]?.Trim();
