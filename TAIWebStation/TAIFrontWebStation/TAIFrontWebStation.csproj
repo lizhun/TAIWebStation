@@ -73,6 +73,7 @@
   <ItemGroup>
     <Content Include="GetAIResult.ashx" />
     <Content Include="UpdateAIData.ashx" />
+    <None Include="Properties\PublishProfiles\111.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
