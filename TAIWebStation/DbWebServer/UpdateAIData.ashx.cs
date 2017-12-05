@@ -20,25 +20,33 @@ namespace DbWebServer
             context.Response.ContentType = "text/plain";
             if (context.Request.HttpMethod == "POST")
             {
-                var dbType = context.Request.Form["DbType"].Trim();
-                var patId = context.Request.Form["PatId"].Trim();
-                WebClient cc = new WebClient();
-                var paras = new NameValueCollection();
-                foreach (var key in context.Request.Form.AllKeys)
+                try
                 {
-                    paras.Add(key, context.Request.Form[key]);
+
+                    var dbType = context.Request.Form["DbType"].Trim();
+                    var patId = context.Request.Form["PatId"].Trim();
+                    WebClient cc = new WebClient();
+                    var paras = new NameValueCollection();
+                    foreach (var key in context.Request.Form.AllKeys)
+                    {
+                        paras.Add(key, context.Request.Form[key]);
+                    }
+                    var dbmanager = new TAIDbManager();
+                    string studyId = dbmanager.GetStudyIdByPatId(dbType, patId);
+                    paras.Add("StudyId", studyId);
+                    byte[] responseData = cc.UploadValues(AppSettings.FrontServerBaseUrl + "/UpdateAIData.ashx", paras);
+                    var strdata = Encoding.UTF8.GetString(responseData);
+                    var imgdatalist = context.Request.Form.AllKeys.Where(x => x.Contains("img_"));
+                    var imgids = imgdatalist.Select(x => x.Replace("img_", "")
+               .Replace("_content", "").Replace("_url", "")).Distinct().ToList();
+
+                    dbmanager.SaveStudyUpload(dbType, studyId, patId, imgids);
+                    context.Response.Write(strdata);
                 }
-                var dbmanager = new TAIDbManager();
-                string studyId = dbmanager.GetStudyIdByPatId(dbType, patId);
-                paras.Add("StudyId", studyId);
-                byte[] responseData = cc.UploadValues(AppSettings.FrontServerBaseUrl + "/UpdateAIData.ashx", paras);
-                var strdata = Encoding.UTF8.GetString(responseData);
-                var imgdatalist = context.Request.Form.AllKeys.Where(x => x.Contains("img_"));
-                var imgids = imgdatalist.Select(x => x.Replace("img_", "")
-           .Replace("_content", "").Replace("_url", "")).Distinct().ToList();
-               
-                dbmanager.SaveStudyUpload(dbType, studyId, patId, imgids);
-                context.Response.Write(strdata);
+                catch (Exception e)
+                {
+                    context.Response.Write(e.Message);
+                }
             }
             else
             {

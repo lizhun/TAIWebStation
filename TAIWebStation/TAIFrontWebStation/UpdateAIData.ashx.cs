@@ -20,12 +20,19 @@ namespace TAIFrontWebStation
             context.Response.ContentType = "text/plain";
             if (context.Request.HttpMethod == "POST")
             {
-                var formdata = context.Request.Form;
-            
-                Aimis manager = new Aimis(false);//1111
-                var data = ContextToAIRequst(context);
-                var result = manager.StudyUpload(data);
-                context.Response.Write(result.Message);         
+                try
+                {
+                    var formdata = context.Request.Form;
+
+                    Aimis manager = new Aimis(false);//1111
+                    var data = ContextToAIRequst(context);
+                    var result = manager.StudyUpload(data);
+                    context.Response.Write(result.Message);
+                }
+                catch (Exception e)
+                {
+                    context.Response.Write(e.Message);
+                }
             }
             else
             {
