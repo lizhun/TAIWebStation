@@ -25,7 +25,7 @@ namespace TAIFrontWebStation
                 Aimis manager = new Aimis(false);//1111
                 var data = ContextToAIRequst(context);
                 var result = manager.StudyUpload(data);
-                context.Response.Write(result.ToString());         
+                context.Response.Write(result.Message);         
             }
             else
             {
