@@ -18,5 +18,7 @@ namespace BLL
 ConfigurationManager.AppSettings[nameof(DBBaseUrl)];
         public static string FrontServerBaseUrl =>
 ConfigurationManager.AppSettings[nameof(FrontServerBaseUrl)];
+        public static string TAIDetailUrl =>
+ConfigurationManager.AppSettings[nameof(TAIDetailUrl)];
     }
 }
