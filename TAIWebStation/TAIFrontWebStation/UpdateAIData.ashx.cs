@@ -55,7 +55,7 @@ namespace TAIFrontWebStation
             data.PatientGender = formdata["PatientGender"]?.Trim();
             data.PatientBirthday = formdata["PatientBirthday"]?.Trim();
             var sdata = formdata["StudyDate"].Trim();
-            data.StudyDate = (int)(DateTime.Parse(sdata).Ticks - DateTime.Parse("1970-1-1").Ticks);
+            data.StudyDate = DateTime.Parse(sdata).Ticks - DateTime.Parse("1970-1-1").Ticks;
             var imgdatalist = formdata.AllKeys.Where(x => x.Contains("img_"));
             var imgids = imgdatalist.Select(x => x.Replace("img_", "")
               .Replace("_content", "").Replace("_url", "")).Distinct().ToList();
